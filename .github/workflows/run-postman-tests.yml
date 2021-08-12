@@ -1,0 +1,24 @@
+# id : 12145487
+name: Integration Tests
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'what environment to run the tests on'
+        required: true
+        default: 'testing'
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - run: echo "Hello ${{ github.event.inputs.environment }}!"
