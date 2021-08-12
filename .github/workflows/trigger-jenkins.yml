@@ -10,11 +10,14 @@ jobs:
   build: 
     runs-on: ubuntu-18.04
     name: 'Fire Jenkins Job'
-    if: github.event.pull_request.merged == 'true'
+    # if: github.event.pull_request.merged == 'true'
 
     steps:
       - name: Clone Repo 
         uses: actions/checkout@v2
+
+      - name: PR Event
+        run: echo ${{ github.event.pull_request }}
 
       - name: Deploy \w Jenkins (fire and forget)
         uses: leanix/jenkins-action@master
