@@ -1,0 +1,39 @@
+name: GH-A <=> Jenkins
+
+on:
+  push:
+    branches:
+      - "develop"
+
+jobs:
+  build: 
+    runs-on: ubuntu-18.04
+    name: 'Fire Jenkins Job'
+    # if: github.event.pull_request.merged == 'true'
+
+    steps:
+      - name: Clone Repo 
+        uses: actions/checkout@v2
+
+      - name: Deploy \w Jenkins (fire and forget)
+        uses: leanix/jenkins-action@master
+        with:
+          jobBuildUrl: ${{ secrets.JENKINS_URL }}/job/${{ secrets.JENKINS_JOB_NAME }}/buildWithParameters
+          waitForCompletion: false
+          parameters: |
+            target: 'testing'
+            branch: 'develop'
+        env:
+          JENKINS_USER: ${{ secrets.JENKINS_USER }}
+          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
+
+      # - name: Deploy \w Jenkins (fire and forget)
+      #   id: jenkinsRequest
+      #   uses: fjogeleit/http-request-action@master
+      #   with:
+      #     method: 'POST'
+      #     data: '{"branch":"develop", "target":"testing"}}'
+      #     url: '${{ secrets.JENKINS_URL }}/generic-webhook-trigger/invoke?token=${{ secrets.JENKINS_TOKEN }}'
+
+      # - name: Show Response
+      #   run: echo ${{ steps.jenkinsRequest.outputs.response }}
