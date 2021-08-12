@@ -19,25 +19,25 @@ jobs:
       - name: PR Event
         run: echo ${{ github.event.pull_request }}
 
-      - name: Deploy \w Jenkins (fire and forget)
-        uses: leanix/jenkins-action@master
-        with:
-          jobBuildUrl: ${{ secrets.JENKINS_URL }}/job/${{ secrets.JENKINS_JOB_NAME }}/buildWithParameters
-          waitForCompletion: false
-          parameters: |
-            target: 'testing'
-            branch: 'develop'
-        env:
-          JENKINS_USER: ${{ secrets.JENKINS_USER }}
-          JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
-
       # - name: Deploy \w Jenkins (fire and forget)
-      #   id: jenkinsRequest
-      #   uses: fjogeleit/http-request-action@master
+      #   uses: leanix/jenkins-action@master
       #   with:
-      #     method: 'POST'
-      #     data: '{"branch":"develop", "target":"testing"}}'
-      #     url: '${{ secrets.JENKINS_URL }}/generic-webhook-trigger/invoke?token=${{ secrets.JENKINS_TOKEN }}'
+      #     jobBuildUrl: ${{ secrets.JENKINS_URL }}/job/${{ secrets.JENKINS_JOB_NAME }}/buildWithParameters
+      #     waitForCompletion: false
+      #     parameters: |
+      #       target: 'testing'
+      #       branch: 'develop'
+      #   env:
+      #     JENKINS_USER: ${{ secrets.JENKINS_USER }}
+      #     JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
 
-      # - name: Show Response
-      #   run: echo ${{ steps.jenkinsRequest.outputs.response }}
+      - name: Deploy \w Jenkins (fire and forget)
+        id: jenkinsRequest
+        uses: fjogeleit/http-request-action@master
+        with:
+          method: 'POST'
+          data: '{"branch":"develop", "target":"testing"}'
+          url: '${{ secrets.JENKINS_URL }}/generic-webhook-trigger/invoke?token=${{ secrets.JENKINS_TOKEN }}'
+
+      - name: Show Response
+        run: echo ${{ steps.jenkinsRequest.outputs.response }}
