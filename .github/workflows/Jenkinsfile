@@ -4,8 +4,7 @@ pipeline {
   }
 
   environment {
-    BUILD_SECRETS = credentials('sensibill-api-build-secrets')
-    NPM_TOKEN = sh(returnStdout: true, script: '#!/bin/sh -e\necho $BUILD_SECRETS | grep NPM_TOKEN | cut -d "=" -f 2')
+    
   }
 
   stages {
@@ -18,13 +17,23 @@ pipeline {
 
     stage('Deploy to TESTING') {
       script {
-          env.ghaPayload = {
-            "environment": "testing"
+          env.ghaData = {
+            "ref": "develop",
+            "inputs": {
+                "environment": "testing"
+            }
           }
+
+          env.ghaURL = "https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches"
+
+          env.ghaHeaders = [
+              [name: 'Accept', value: 'application/vnd.github.v3+json']
+              [name: 'Authorization', value: 'token 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']
+          ]
       }
 
       steps {
-        httpRequest(url: 'https://postman-echo.com/post', httpMode: 'POST', requestBody: "${env.ghaPayload}", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON')
+        httpRequest(url: "${env.ghaURL}", httpMode: 'POST', requestBody: "${env.ghaData}", customHeaders: "${env.ghaHeaders}", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON')
       }
     }
     
