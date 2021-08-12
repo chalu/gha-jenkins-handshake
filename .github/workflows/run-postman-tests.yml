@@ -21,4 +21,5 @@ jobs:
       - name: Install Newman
         run: npm install -g newman
 
-      - run: echo "Hello ${{ github.event.inputs.environment }}!"
+      - name: Run Tests
+        run: echo "Input => ${{ github.event.inputs.environment }}!"
