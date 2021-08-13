@@ -31,7 +31,6 @@ pipeline {
 
             httpRequest (
                 httpMode: 'POST',
-                url: "${ghaURL}",
                 requestBody: "${ghaData}",
                 consoleLogResponseBody: true,
                 contentType: 'APPLICATION_JSON',
