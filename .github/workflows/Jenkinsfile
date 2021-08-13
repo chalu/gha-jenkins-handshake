@@ -17,20 +17,18 @@ pipeline {
 
     stage('Deploy to TESTING') {
       script {
-          env.ghaData = {
-              "inputs": { "environment":"testing" }
-          }
+          def ghaData = readJSON text: '{ "ref": "develop", "inputs": { "environment":"testing" } }'
 
-          env.ghaURL = "https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches"
+          def ghaURL = "https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches"
 
-          env.ghaHeaders = [
+          def ghaHeaders = [
               [name: 'Accept', value: 'application/vnd.github.v3+json']
               [name: 'Authorization', value: 'token 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']
           ]
       }
 
       steps {
-        httpRequest(url: "${env.ghaURL}", httpMode: 'POST', requestBody: "${env.ghaData}", customHeaders: "${env.ghaHeaders}", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON')
+        httpRequest(url: "${ghaURL}", httpMode: 'POST', requestBody: "${ghaData}", customHeaders: "${ghaHeaders}", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON')
       }
     }
     
