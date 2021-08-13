@@ -18,22 +18,23 @@ pipeline {
 
     stage('Deploy to TESTING') {
 
-        script {
-            def ghaURL = "https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches"
-            def ghaHeaders = [
-                [name: 'Accept', value: 'application/vnd.github.v3+json']
-                [name: 'Authorization', value: 'token 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']
-            ]
-
-            JSONObject ghaTestTarget = new JSONObject();
-            ghaTestTarget.put('environment', 'testing');
-
-            JSONObject ghaData = new JSONObject();
-            ghaData.put('ref', 'develop');
-            ghaData.put('inputs', ghaTestTarget);
-        }
-
         steps {
+            
+            script {
+                def ghaURL = "https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches"
+                def ghaHeaders = [
+                    [name: 'Accept', value: 'application/vnd.github.v3+json']
+                    [name: 'Authorization', value: 'token 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']
+                ]
+
+                JSONObject ghaTestTarget = new JSONObject();
+                ghaTestTarget.put('environment', 'testing');
+
+                JSONObject ghaData = new JSONObject();
+                ghaData.put('ref', 'develop');
+                ghaData.put('inputs', ghaTestTarget);
+            }
+
             httpRequest (
                 httpMode: 'POST',
                 url: "${ghaURL}",
