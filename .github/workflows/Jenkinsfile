@@ -12,28 +12,28 @@ pipeline {
     }
 
     stage('Deploy to TESTING') {
-      script {
-          
-      }
 
-      steps {
-        // def ghaData = readJSON text: '{ "key": "value", "inputs": "" }', returnPojo: true
-        // ghaData.inputs = { "environment": "testing" }
+        script {
+            def ghaURL = "https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches"
+            def ghaHeaders = [
+                [name: 'Accept', value: 'application/vnd.github.v3+json']
+                [name: 'Authorization', value: 'token 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']
+            ]
+        }
 
-        // def ghaURL = "https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches"
+        steps {
+            httpRequest (
+                httpMode: 'POST',
+                url: "${ghaURL}",
+                requestBody: "${ghaData}",
+                consoleLogResponseBody: true,
+                customHeaders: "${ghaHeaders}",
+                contentType: 'APPLICATION_JSON',
+                acceptType: 'APPLICATION_JSON'
+            )
 
-        // def ghaHeaders = [
-        //       [name: 'Accept', value: 'application/vnd.github.v3+json']
-        //       [name: 'Authorization', value: 'token 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']
-        // ]
-        // httpRequest(url: "${ghaURL}", httpMode: 'POST', requestBody: "${ghaData}", customHeaders: "${ghaHeaders}", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON')
-        sh '''
-            curl -X POST \ 
-            -H "Accept: application/vnd.github.v3+json" -H "Authorization: token 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" \
-            https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches \
-            -d '{"ref":"develop", "inputs": { "environment":"testing" }}'
-        '''
-      }
+            // httpRequest(url: "${ghaURL}", httpMode: 'POST', requestBody: "${ghaData}", customHeaders: "${ghaHeaders}", acceptType: 'APPLICATION_JSON', contentType: 'APPLICATION_JSON')
+        }
     }
     
   }
