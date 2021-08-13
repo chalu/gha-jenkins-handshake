@@ -1,3 +1,8 @@
+#!/usr/bin/env groovy
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import hudson.model.Actionable;
+
 pipeline {
   agent {
     label 'main'
@@ -19,6 +24,13 @@ pipeline {
                 [name: 'Accept', value: 'application/vnd.github.v3+json']
                 [name: 'Authorization', value: 'token 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']
             ]
+
+            JSONObject ghaTestTarget = new JSONObject();
+            ghaTestTarget.put('environment', 'testing');
+
+            JSONObject ghaData = new JSONObject();
+            ghaData.put('ref', 'develop');
+            ghaData.put('inputs', ghaTestTarget);
         }
 
         steps {
