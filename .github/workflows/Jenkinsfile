@@ -18,10 +18,7 @@ pipeline {
     stage('Deploy to TESTING') {
       script {
           env.ghaData = {
-            "ref": "develop",
-            "inputs": {
-                "environment": "testing"
-            }
+              "inputs": { "environment":"testing" }
           }
 
           env.ghaURL = "https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches"
