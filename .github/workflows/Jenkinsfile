@@ -10,6 +10,14 @@ pipeline {
 
   stages {
 
+    stage('Inspect') {
+      steps {
+        sh "pwd"
+        sh "ls"
+        sh "cat ./.github/workflows/Jenkinsfile"
+      }
+    }
+
     stage('Deploy to TESTING') {
 
         steps {
