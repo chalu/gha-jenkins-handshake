@@ -42,7 +42,7 @@ pipeline {
                 consoleLogResponseBody: true,
                 validResponseCodes: '200, 401',
                 url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/dispatches',
-                customHeaders: [[name: 'Accept', value: 'application/vnd.github.everest-preview+json'], [name: 'Authorization', value: 'Bearer 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', maskValue: false]]
+                customHeaders: [[name: 'Accept', value: 'application/vnd.github.everest-preview+json'], [name: 'Authorization', value: 'Bearer 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', maskValue: false]]
             )
         }
     }
