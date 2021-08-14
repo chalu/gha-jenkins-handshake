@@ -52,7 +52,7 @@ pipeline {
 
   post {
     always {
-      sh "docker container stop sb-mongo stop"
+      sh "docker container stop sb-mongo"
       sh "docker container prune"
 
       cleanWs()
