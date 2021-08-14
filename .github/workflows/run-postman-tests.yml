@@ -1,12 +1,14 @@
 # id : 12145487
 name: Integration Tests
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'what environment to run the tests on'
-        required: true
-        default: 'testing'
+  repository_dispatch:
+    types: [newman]
+  # workflow_dispatch:
+  #   inputs:
+  #     environment:
+  #       description: 'what environment to run the tests on'
+  #       required: true
+  #       default: 'testing'
 
 jobs:
   newman:
@@ -22,4 +24,4 @@ jobs:
         run: npm install -g newman
 
       - name: Run Tests
-        run: echo "Input => ${{ github.event.inputs.environment }}!"
+        run: echo "Input => ${{ github.event.client_payload.environment }}!"

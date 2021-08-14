@@ -1,8 +1,3 @@
-// #!/usr/bin/env groovy
-// import net.sf.json.JSONArray;
-// import net.sf.json.JSONObject;
-// import hudson.model.Actionable;
-
 pipeline {
   agent {
     label 'main'
@@ -12,8 +7,6 @@ pipeline {
 
     stage('Inspect') {
       steps {
-        sh "pwd"
-        sh "ls"
         sh "cat ./.github/workflows/Jenkinsfile"
       }
     }
@@ -22,18 +15,34 @@ pipeline {
 
         steps {
 
+            //  workflow-dispatch
+            // httpRequest (
+            //     httpMode: 'POST',
+            //     requestBody: '''{
+            //       "ref": "develop",
+            //       "inputs": {
+            //         "environment": "testing"
+            //       }
+            //     }''',
+            //     consoleLogResponseBody: true,
+            //     validResponseCodes: '200, 401',
+            //     url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
+            //     customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: 'token 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', maskValue: false]]
+            // )
+
+            // repository-dispatch
             httpRequest (
                 httpMode: 'POST',
                 requestBody: '''{
-                  "ref": "develop",
-                  "inputs": {
+                  "event_type": "newman",
+                  "client_payload": {
                     "environment": "testing"
                   }
                 }''',
                 consoleLogResponseBody: true,
                 validResponseCodes: '200, 401',
-                url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
-                customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: 'token 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', maskValue: false]]
+                url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/dispatches',
+                customHeaders: [[name: 'Accept', value: 'application/vnd.github.everest-preview+json'], [name: 'Authorization', value: 'Bearer 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', maskValue: false]]
             )
         }
     }
