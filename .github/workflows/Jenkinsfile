@@ -33,7 +33,7 @@ pipeline {
                 consoleLogResponseBody: true,
                 validResponseCodes: '200, 401',
                 url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
-                customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: 'token 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']]
+                customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: 'token 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']]
             )
         }
     }
