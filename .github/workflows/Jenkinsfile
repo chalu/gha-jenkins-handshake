@@ -10,37 +10,18 @@ pipeline {
 
   stages {
 
-    stage('Build Artifact') {
-      steps {
-        sh "echo BRANCH_NAME ${env.BRANCH_NAME}"
-        sh "echo CHANGE_TARGET ${env.CHANGE_TARGET}"
-        sh "echo GIT_LOCAL_BRANCH ${env.GIT_LOCAL_BRANCH}"
-      }
-    }
-
     stage('Deploy to TESTING') {
 
         steps {
-            
-            script {
-                // JSONObject ghaTestTarget = new JSONObject();
-                // ghaTestTarget.put('environment', 'testing');
 
-                // JSONObject ghaData = new JSONObject();
-                // ghaData.put('ref', 'develop');
-                // ghaData.put('inputs', ghaTestTarget);
-
-                def ghaData = '''{
+            httpRequest (
+                httpMode: 'POST',
+                requestBody: '''{
                   "ref": "develop",
                   "inputs": {
                     "environment": "testing"
                   }
-                }'''
-            }
-
-            httpRequest (
-                httpMode: 'POST',
-                requestBody: "${ghaData}",
+                }''',
                 consoleLogResponseBody: true,
                 contentType: 'APPLICATION_JSON',
                 acceptType: 'APPLICATION_JSON',
