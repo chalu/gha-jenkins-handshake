@@ -24,9 +24,8 @@ pipeline {
                 }''',
                 consoleLogResponseBody: true,
                 contentType: 'APPLICATION_JSON',
-                acceptType: 'APPLICATION_JSON',
                 url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
-                customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', maskValue: true, value: 'token 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']]
+                customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: 'token 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', maskValue: true]]
             )
         }
     }
