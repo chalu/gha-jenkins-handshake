@@ -22,21 +22,19 @@ pipeline {
 
         steps {
 
-            // httpRequest (
-            //     httpMode: 'POST',
-            //     requestBody: '''{
-            //       "ref": "develop",
-            //       "inputs": {
-            //         "environment": "testing"
-            //       }
-            //     }''',
-            //     consoleLogResponseBody: true,
-            //     validResponseCodes: '200, 401',
-            //     url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
-            //     customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: 'token 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']]
-            // )
-
-            sh "curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token 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" https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches -d '{"ref":"develop", "inputs": { "environment":"testing" }}'"
+            httpRequest (
+                httpMode: 'POST',
+                requestBody: '''{
+                  "ref": "develop",
+                  "inputs": {
+                    "environment": "testing"
+                  }
+                }''',
+                consoleLogResponseBody: true,
+                validResponseCodes: '200, 401',
+                url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
+                customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: 'token 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']]
+            )
         }
     }
     
