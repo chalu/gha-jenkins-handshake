@@ -1,7 +1,7 @@
-#!/usr/bin/env groovy
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-import hudson.model.Actionable;
+// #!/usr/bin/env groovy
+// import net.sf.json.JSONArray;
+// import net.sf.json.JSONObject;
+// import hudson.model.Actionable;
 
 pipeline {
   agent {
@@ -12,7 +12,9 @@ pipeline {
 
     stage('Build Artifact') {
       steps {
-        sh "docker run --name sb-mongo -d mongo:latest"
+        sh "echo BRANCH_NAME ${BRANCH_NAME}"
+        sh "echo CHANGE_TARGET ${CHANGE_TARGET}"
+        sh "echo GIT_LOCAL_BRANCH ${GIT_LOCAL_BRANCH}"
       }
     }
 
@@ -52,7 +54,7 @@ pipeline {
 
   post {
     always {
-      sh "docker container stop sb-mongo"
+      cleanWs()
     }
   }
 }
