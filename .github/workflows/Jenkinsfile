@@ -12,9 +12,9 @@ pipeline {
 
     stage('Build Artifact') {
       steps {
-        sh "echo BRANCH_NAME ${BRANCH_NAME}"
-        sh "echo CHANGE_TARGET ${CHANGE_TARGET}"
-        sh "echo GIT_LOCAL_BRANCH ${GIT_LOCAL_BRANCH}"
+        sh "echo BRANCH_NAME ${env.BRANCH_NAME}"
+        sh "echo CHANGE_TARGET ${env.CHANGE_TARGET}"
+        sh "echo GIT_LOCAL_BRANCH ${env.GIT_LOCAL_BRANCH}"
       }
     }
 
