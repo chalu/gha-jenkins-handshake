@@ -5,12 +5,6 @@ pipeline {
 
   stages {
 
-    stage('Inspect') {
-      steps {
-        sh "cat ./.github/workflows/Jenkinsfile"
-      }
-    }
-
     stage('Deploy to TESTING') {
 
         environment {
@@ -19,20 +13,22 @@ pipeline {
 
         steps {
 
+          echo "GITHUB PAT: ${GITHUB_PAT}"
+
             //  workflow-dispatch
-            httpRequest (
-                httpMode: 'POST',
-                requestBody: '''{
-                  "ref": "develop",
-                  "inputs": {
-                    "environment": "testing"
-                  }
-                }''',
-                consoleLogResponseBody: true,
-                validResponseCodes: '200, 401',
-                url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
-                customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: 'token $GITHUB_PAT', maskValue: false]]
-            )
+            // httpRequest (
+            //     httpMode: 'POST',
+            //     requestBody: '''{
+            //       "ref": "develop",
+            //       "inputs": {
+            //         "environment": "testing"
+            //       }
+            //     }''',
+            //     consoleLogResponseBody: true,
+            //     validResponseCodes: '200, 401',
+            //     url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
+            //     customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: 'token $GITHUB_PAT', maskValue: false]]
+            // )
 
             // repository-dispatch
             // httpRequest (
