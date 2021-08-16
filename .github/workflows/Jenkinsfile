@@ -25,7 +25,7 @@ pipeline {
                   }
                 }''',
                 consoleLogResponseBody: true,
-                validResponseCodes: '200, 401, 403',
+                validResponseCodes: '200, 204, 401, 403',
                 url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
                 customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: "token ${GITHUB_PAT}"]]
             )
