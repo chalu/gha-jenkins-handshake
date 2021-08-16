@@ -13,19 +13,7 @@ pipeline {
 
         steps {
 
-            script {
-              def URL = 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches'
-              def acceptH = 'Accept: application/vnd.github.v3+json'
-              def authH = 'Authorization: token $GITHUB_PAT'
-              def data = '''{
-                  "ref": "develop",
-                  "inputs": {
-                    "environment": "testing"
-                  }
-                }'''
-            }
-
-            sh 'curl -v -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_PAT}" https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches -d \'$data\''
+            sh 'curl -v -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_PAT}" https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches -d \'{"ref": "develop", "inputs": { "environment": "testing"}}\''
 
             //  workflow-dispatch
             // httpRequest (
