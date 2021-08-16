@@ -3,17 +3,18 @@ pipeline {
     label 'main'
   }
 
+  environment {
+    GITHUB_PAT = credentials('gha-jenkins-handshake-pat-token')
+  }
+
   stages {
 
     stage('Deploy to TESTING') {
 
-        environment {
-          GITHUB_PAT = credentials('gha-jenkins-handshake-pat-token')
-        }
-
         steps {
 
-          echo "GITHUB PAT: ${GITHUB_PAT}"
+            def URL = 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches'
+            sh 'curl -v POST -H \'Accept: application/vnd.github.v3+json\' -H \'Authorization: token $GITHUB_PAT\' $URL -d \'{"ref":"develop", "inputs": { "environment":"testing"}}\''
 
             //  workflow-dispatch
             // httpRequest (
