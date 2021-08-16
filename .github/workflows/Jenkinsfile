@@ -25,7 +25,7 @@ pipeline {
                 }'''
             }
 
-            sh 'curl -v -X POST -H $acceptH -H $authH $URL -d $data'
+            sh 'curl -v -X POST -H $acceptH -H $authH $URL -d \'$data\''
 
             //  workflow-dispatch
             // httpRequest (
