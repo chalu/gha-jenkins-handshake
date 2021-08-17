@@ -14,21 +14,21 @@ pipeline {
         steps {
 
           script {
-            env.ghaPayload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": "${DEPLOY_TARGET}"} }'
+            env.ghaPayload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": $DEPLOY_TARGET} }'
           }
             //  inspect input data
-            // sh 'echo Payload: ${env.ghaPayload}'
-            // sh 'echo Default: ${env.BRANCH} : ${env.DEPLOY_TARGET}'
+            echo 'Payload: ${env.ghaPayload}'
+            echo 'Default: ${BRANCH} : ${DEPLOY_TARGET}'
 
             //  repository-dispatch
-            httpRequest (
-                httpMode: 'POST',
-                requestBody: env.ghaPayload,
-                consoleLogResponseBody: true,
-                validResponseCodes: '204, 401, 403',
-                url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/dispatches',
-                customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: "token ${GITHUB_PAT}"]]
-            )
+            // httpRequest (
+            //     httpMode: 'POST',
+            //     requestBody: env.ghaPayload,
+            //     consoleLogResponseBody: true,
+            //     validResponseCodes: '204, 401, 403',
+            //     url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/dispatches',
+            //     customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: "token ${GITHUB_PAT}"]]
+            // )
 
             // //  workflow-dispatch
             // httpRequest (
