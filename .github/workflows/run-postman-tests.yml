@@ -13,6 +13,8 @@ on:
 jobs:
   newman:
     runs-on: ubuntu-latest
+    name: 'Run Postman Suite >>> ${{ github.event.client_payload.environment }}'
+
     if: github.event.action == 'POSTMAN' && endsWith(github.ref, '/develop')
 
     steps:
