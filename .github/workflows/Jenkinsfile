@@ -14,7 +14,7 @@ pipeline {
         steps {
 
           script {
-            env.ghaPayload = readJSON text: "{ \"event_type\": \"POSTMAN\", \"client_payload\": {\"environment\": \"${env.DEPLOY_TARGET}\"} }"
+            env.ghaPayload = readJSON text: "{ \"event_type\": \"POSTMAN\", \"client_payload\": {\"environment\": \"${env.GHA_TARGET_ENV}\"} }"
           } 
 
           //  repository-dispatch

@@ -13,7 +13,7 @@ on:
 jobs:
   newman:
     runs-on: ubuntu-latest
-    if: github.event.action == 'POSTMAN'
+    if: github.event.action == 'POSTMAN' && endsWith(github.ref, '/develop')
 
     steps:
       # - name: Install Node
@@ -24,11 +24,16 @@ jobs:
       # - name: Install Newman
       #   run: npm install -g newman
 
+      # GITHUB_REF / github.ref => refs/heads/<branch_name> | refs/tags/<tag_name>
       - name: Inspect Dispatch/ENV Data
+        env:
+          REF: "${GITHUB_REF}"
+          ACTION: "${{ github.event.action }}"
+          TARGET: "${{ github.event.client_payload.environment }}"
         run: |
           echo "Ref: ${GITHUB_REF}"
           echo "Action: ${{ github.event.action }}"
-          echo "payload: ${{ toJson(github.event.client_payload) }}"
+          echo "Test Target: ${{ github.event.client_payload.environment }}"
 
       # - name: Inspect (Workflow Dispatch)
       #   run: |

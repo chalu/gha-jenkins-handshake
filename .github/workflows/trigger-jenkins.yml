@@ -1,43 +1,42 @@
 # id: 12145488
+
 name: GH-A <=> Jenkins
 
+# To trigger this workflow only onMerge, we target the 'closed' activity type of
+# a pull_request and conditionally run the job if pull_request.merged is TRUE
+# 
+# When this happens: 
+#   GITHUB_REF => refs/pull/:prNumber/merge
+#   GITHUB_SHA => Last merge commit on the GITHUB_REF branch
+# 
+# See https://docs.github.com/en/actions/reference/events-that-trigger-workflows#pull_request
+# See https://brennerm.github.io/posts/trigger-github-actions-on-pr-close.html
+# 
 on:
-  push:
-    branches:
-      - "develop"
+  pull_request:
+    types: [closed]
 
 jobs:
   build: 
     runs-on: ubuntu-18.04
     name: 'Fire Jenkins Job'
-    # if: github.event.pull_request.merged == 'true'
+
+    # this job will only run when the PR is merged
+    if: github.event.pull_request.merged == true
 
     steps:
       - name: Clone Repo 
         uses: actions/checkout@v2
-
-      - name: PR Event
-        run: echo ${{ github.event }}
-
-      # - name: Deploy \w Jenkins (fire and forget)
-      #   uses: leanix/jenkins-action@master
-      #   with:
-      #     jobBuildUrl: ${{ secrets.JENKINS_URL }}/job/${{ secrets.JENKINS_JOB_NAME }}/buildWithParameters
-      #     waitForCompletion: false
-      #     parameters: |
-      #       target: 'testing'
-      #       branch: 'develop'
-      #   env:
-      #     JENKINS_USER: ${{ secrets.JENKINS_USER }}
-      #     JENKINS_TOKEN: ${{ secrets.JENKINS_TOKEN }}
 
       - name: Deploy \w Jenkins (fire and forget)
         id: jenkinsRequest
         uses: fjogeleit/http-request-action@master
         with:
           method: 'POST'
-          data: '{"branch":"develop", "target":"testing"}'
-          url: '${{ secrets.JENKINS_URL }}/generic-webhook-trigger/invoke?token=${{ secrets.JENKINS_TOKEN }}'
+          data: '{"branch": "develop", "target": "testing"}'
+          url: '${{ secrets.JENKINS_URL }}/generic-webhook-trigger/invoke?token=${{ secrets.GHA_POC_PAT }}'
 
-      - name: Show Response
-        run: echo ${{ steps.jenkinsRequest.outputs.response }}
+      - name: Inspect ENVs
+        run: |
+          echo "Base Branch: ${{ github.base_ref }}"
+          echo ${{ toJSON(steps.jenkinsRequest.outputs.response) }}
