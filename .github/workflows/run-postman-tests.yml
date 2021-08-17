@@ -13,6 +13,7 @@ on:
 jobs:
   newman:
     runs-on: ubuntu-latest
+    if: github.event.action == POSTMAN
 
     steps:
       # - name: Install Node
@@ -23,11 +24,11 @@ jobs:
       # - name: Install Newman
       #   run: npm install -g newman
 
-      - name: Inspect (Repo Dispatch)
+      - name: Inspect Dispatch/ENV Data
         run: |
-          'echo "payload: ${{ toJson(github.event.client_payload) }}"'
-          'echo "Ref: $GITHUB_REF"'
-          'echo "Action: ${{ github.event.action }}"'
+          echo "Ref: ${GITHUB_REF}"
+          echo "Action: ${{ github.event.action }}"
+          echo "payload: ${{ toJson(github.event.client_payload) }}"
 
       # - name: Inspect (Workflow Dispatch)
       #   run: |
