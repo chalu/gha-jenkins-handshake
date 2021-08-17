@@ -12,23 +12,39 @@ pipeline {
     stage('Deploy to TESTING') {
 
         steps {
+            //  inspect input data
+            sh 'Branch: $BRANCH'
+            sh 'TARGET: $DEPLOY_TARGET'
 
-            // sh 'curl -v -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: token ${GITHUB_PAT}" https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches -d \'{"ref": "develop", "inputs": { "environment": "testing"}}\''
-
-            //  workflow-dispatch
+            //  repository-dispatch
             httpRequest (
                 httpMode: 'POST',
                 requestBody: '''{
-                  "ref": "develop",
-                  "inputs": {
-                    "environment": "testing"
+                  "event_type": "POSTMAN",
+                  "client_payload": {
+                    "environment": "${DEPLOY_TARGET}"
                   }
                 }''',
                 consoleLogResponseBody: true,
-                validResponseCodes: '200, 204, 401, 403',
-                url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
+                validResponseCodes: '204, 401, 403',
+                url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/dispatches',
                 customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: "token ${GITHUB_PAT}"]]
             )
+
+            // //  workflow-dispatch
+            // httpRequest (
+            //     httpMode: 'POST',
+            //     requestBody: '''{
+            //       "ref": "${$BRANCH}",
+            //       "inputs": {
+            //         "environment": "${DEPLOY_TARGET}"
+            //       }
+            //     }''',
+            //     consoleLogResponseBody: true,
+            //     validResponseCodes: '200, 204, 401, 403',
+            //     url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/actions/workflows/12145487/dispatches',
+            //     customHeaders: [[name: 'Accept', value: 'application/vnd.github.v3+json'], [name: 'Authorization', value: "token ${GITHUB_PAT}"]]
+            // )
         }
     }
     
