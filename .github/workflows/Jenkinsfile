@@ -11,11 +11,11 @@ pipeline {
 
     stage('Deploy to TESTING') {
 
-        script {
-          def payload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": "${DEPLOY_TARGET}"} }'
-        }
-
         steps {
+          
+          script {
+            def payload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": "${DEPLOY_TARGET}"} }'
+          }
             //  inspect input data
             sh 'echo "Payload: ${payload}"'
             sh 'echo "Default: ${BRANCH}:${DEPLOY_TARGET}"'
