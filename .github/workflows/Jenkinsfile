@@ -11,20 +11,20 @@ pipeline {
 
     stage('Deploy to TESTING') {
 
+        script {
+          def payload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": "${DEPLOY_TARGET}"} }'
+        }
+
         steps {
             //  inspect input data
-            sh 'echo "Branch: ${BRANCH}"'
-            sh 'echo "TARGET: ${DEPLOY_TARGET}"'
+            sh 'echo "Payload: ${payload}"'
+            sh 'echo "Default: ${BRANCH}:${DEPLOY_TARGET}"'
+            sh 'echo "ENV: ${env.BRANCH}:${env.DEPLOY_TARGET}"'
 
             //  repository-dispatch
             httpRequest (
                 httpMode: 'POST',
-                requestBody: '''{
-                  "event_type": "POSTMAN",
-                  "client_payload": {
-                    "environment": "${DEPLOY_TARGET}"
-                  }
-                }''',
+                requestBody: payload,
                 consoleLogResponseBody: true,
                 validResponseCodes: '204, 401, 403',
                 url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/dispatches',
