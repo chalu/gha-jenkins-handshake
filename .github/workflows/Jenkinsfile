@@ -14,7 +14,7 @@ pipeline {
         steps {
             //  inspect input data
             sh 'Branch: $BRANCH'
-            sh 'TARGET: $DEPLOY_TARGET'
+            // sh 'TARGET: $DEPLOY_TARGET'
 
             //  repository-dispatch
             httpRequest (
