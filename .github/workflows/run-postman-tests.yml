@@ -26,7 +26,7 @@ jobs:
       - name: Inspect (Repo Dispatch)
         run: |
           'echo "payload: ${{ toJson(github.event.client_payload) }}"'
-          'echo "Ref: ${{ GITHUB_REF }}"'
+          'echo "Ref: $GITHUB_REF"'
           'echo "Action: ${{ github.event.action }}"'
 
       # - name: Inspect (Workflow Dispatch)
