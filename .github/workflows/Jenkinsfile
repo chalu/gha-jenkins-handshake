@@ -17,8 +17,8 @@ pipeline {
             env.ghaPayload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": "${DEPLOY_TARGET}"} }'
           }
             //  inspect input data
-            sh 'echo "Payload: ${payload}"'
-            sh 'echo "Default: ${env.BRANCH} : ${env.DEPLOY_TARGET}"'
+            sh 'echo "Payload: ${env.ghaPayload}"'
+            sh 'echo Default: "${env.BRANCH}" : "${env.DEPLOY_TARGET}"'
 
             //  repository-dispatch
             httpRequest (
