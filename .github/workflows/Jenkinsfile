@@ -12,14 +12,13 @@ pipeline {
     stage('Deploy to TESTING') {
 
         steps {
-          
+
           script {
             def payload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": "${DEPLOY_TARGET}"} }'
           }
             //  inspect input data
             sh 'echo "Payload: ${payload}"'
             sh 'echo "Default: ${BRANCH}:${DEPLOY_TARGET}"'
-            sh 'echo "ENV: ${env.BRANCH}:${env.DEPLOY_TARGET}"'
 
             //  repository-dispatch
             httpRequest (
