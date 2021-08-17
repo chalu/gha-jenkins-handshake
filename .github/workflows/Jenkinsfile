@@ -14,16 +14,16 @@ pipeline {
         steps {
 
           script {
-            def payload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": "${DEPLOY_TARGET}"} }'
+            def env.ghaPayload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": "${DEPLOY_TARGET}"} }'
           }
             //  inspect input data
             sh 'echo "Payload: ${payload}"'
-            sh 'echo "Default: ${BRANCH}:${DEPLOY_TARGET}"'
+            sh 'echo "Default: ${env.BRANCH} : ${env.DEPLOY_TARGET}"'
 
             //  repository-dispatch
             httpRequest (
                 httpMode: 'POST',
-                requestBody: payload,
+                requestBody: "${env.ghaPayload}",
                 consoleLogResponseBody: true,
                 validResponseCodes: '204, 401, 403',
                 url: 'https://api.github.com/repos/chalu/gha-jenkins-handshake/dispatches',
