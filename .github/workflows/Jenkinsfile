@@ -18,7 +18,7 @@ pipeline {
           }
             //  inspect input data
             sh 'echo "Payload: ${payload}"'
-            sh 'echo "Default: ${BRANCH}:${DEPLOY_TARGET}"'
+            sh 'echo "Default: ${env.BRANCH} : ${env.DEPLOY_TARGET}"'
 
             //  repository-dispatch
             httpRequest (
