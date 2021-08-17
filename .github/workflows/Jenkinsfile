@@ -17,7 +17,7 @@ pipeline {
           echo "ENV: ${env.BRANCH} : ${env.DEPLOY_TARGET}"
 
           script {
-            env.ghaPayload = readJSON text: '{ "event_type": "POSTMAN", "client_payload": {"environment": \""${env.DEPLOY_TARGET}"\"} }'
+            env.ghaPayload = readJSON text: "{ \"event_type\": \"POSTMAN\", \"client_payload\": {\"environment\": \"${env.DEPLOY_TARGET}\"} }"
           }
           
           //  inspect input data
