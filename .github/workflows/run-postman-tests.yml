@@ -13,7 +13,7 @@ jobs:
 
     # place job in a 'POSTMAN-testing' concurrency group
     # if a new job is triggered while one is on-going, 
-    # cancel the on-going one in favour of the new one
+    # cancel the on-going one in favour of the new one 
     concurrency: 
       group: ${{ github.event.action }}-${{ github.event.client_payload.environment }}
       cancel-in-progress: true
