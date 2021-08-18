@@ -1,6 +1,6 @@
 # id: 12145488
 
-name: Build, Test & Deploy
+name: Build, Test & Deploy 
 
 # To trigger this workflow only onMerge, we target the 'closed' activity type of
 # a pull_request and conditionally run the job if pull_request.merged is TRUE
