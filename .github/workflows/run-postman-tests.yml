@@ -3,6 +3,35 @@ name: Integration Tests
 on:
   repository_dispatch:
     types: [POSTMAN]
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+    name: 'Postman Suite @ ${{ github.event.client_payload.environment }}'
+
+    if: github.event.action == 'POSTMAN' && endsWith(github.ref, '/develop')
+
+    # place job in a 'POSTMAN-testing' concurrency group
+    # if a new job is triggered while one is on-going, 
+    # cancel the on-going one in favour of the new one
+    concurrency: 
+      group: ${{ github.event.action }}-${{ github.event.client_payload.environment }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Install Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Sleep for 60 seconds
+        run: sleep 60s
+        shell: bash
+
+
   # workflow_dispatch:
   #   inputs:
   #     environment:
@@ -10,32 +39,16 @@ on:
   #       required: true
   #       default: 'testing'
 
-jobs:
-  newman:
-    runs-on: ubuntu-latest
-    name: 'Run Postman Suite >>> ${{ github.event.client_payload.environment }}'
-
-    if: github.event.action == 'POSTMAN' && endsWith(github.ref, '/develop')
-
-    steps:
-      # - name: Install Node
-      #   uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '12'
-
-      # - name: Install Newman
-      #   run: npm install -g newman
-
       # GITHUB_REF / github.ref => refs/heads/<branch_name> | refs/tags/<tag_name>
-      - name: Inspect Dispatch/ENV Data
-        env:
-          REF: "${GITHUB_REF}"
-          ACTION: "${{ github.event.action }}"
-          TARGET: "${{ github.event.client_payload.environment }}"
-        run: |
-          echo "Ref: ${GITHUB_REF}"
-          echo "Action: ${{ github.event.action }}"
-          echo "Test Target: ${{ github.event.client_payload.environment }}"
+      # - name: Inspect Dispatch/ENV Data
+      #   env:
+      #     REF: "${GITHUB_REF}"
+      #     ACTION: "${{ github.event.action }}"
+      #     TARGET: "${{ github.event.client_payload.environment }}"
+      #   run: |
+      #     echo "Ref: ${GITHUB_REF}"
+      #     echo "Action: ${{ github.event.action }}"
+      #     echo "Test Target: ${{ github.event.client_payload.environment }}"
 
       # - name: Inspect (Workflow Dispatch)
       #   run: |

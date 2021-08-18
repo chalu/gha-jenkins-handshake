@@ -1,6 +1,6 @@
 # id: 12145488
 
-name: GH-A <=> Jenkins
+name: Build, Test & Deploy
 
 # To trigger this workflow only onMerge, we target the 'closed' activity type of
 # a pull_request and conditionally run the job if pull_request.merged is TRUE
@@ -21,20 +21,28 @@ jobs:
     runs-on: ubuntu-18.04
     name: 'Fire Jenkins Job'
 
-    # this job will only run when a PR being merged into develop branch
+    # this job will only run when a PR is merged into develop branch
     if: github.event.pull_request.merged == true && github.base_ref == 'develop'
 
     steps:
       - name: Clone Repo 
         uses: actions/checkout@v2
 
+      - name: 'Lint Codebase'
+        run: echo 'Lint Codebase'
+
+      - name: 'Build & Start API App'
+        run: echo 'Build & Start API App'
+
+      - name: 'Run Unit Tests'
+        run: echo 'Run Unit Tests'
+
       - name: Deploy \w Jenkins (fire and forget)
-        id: jenkinsRequest
         uses: fjogeleit/http-request-action@master
         with:
           method: 'POST'
           data: '{"branch": "${{ github.base_ref }}", "target": "testing"}'
           url: '${{ secrets.JENKINS_URL }}/generic-webhook-trigger/invoke?token=${{ secrets.GHA_POC_PAT }}'
 
-      - name: Inspect ENVs
-        run: echo "Base Branch ${{ github.base_ref }}"
+      # - name: Inspect ENVs
+      #   run: echo "Base Branch ${{ github.base_ref }}"
