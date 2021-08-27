@@ -26,7 +26,7 @@ jobs:
 
       - name: Metadata 
         run: |
-         RAW=$(git branch -r --contains ${{ github.ref }})
+         echo "RAW=$(git branch -r --contains ${{ github.ref }})"
          echo "BRANCH=${RAW/origin\/}" >> $GITHUB_ENV
          echo "action_state=yellow" >> $GITHUB_ENV
 
