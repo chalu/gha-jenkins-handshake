@@ -9,7 +9,7 @@ name: Feature Branch
 on:
   push:
     tags:
-      - deploy-G2APIS-*
+      - deploy/G2APIS-*
 
 jobs:
   test: 
@@ -20,11 +20,6 @@ jobs:
       SHA12: ${GITHUB_SHA:0:12}
 
     steps:
-      - uses: actions/checkout@v2
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: '12.18.3'
-      #     cache: 'npm'
 
       - name: Metadata 1
         run: |
@@ -38,6 +33,12 @@ jobs:
           echo "Ref: ${GITHUB_REF}"
           echo "Event: ${GITHUB_EVENT_NAME}"
           echo "SHA12: ${GITHUB_SHA:0:12}"
+
+      - name: GitHub CTX Dump
+        env:
+          CTX: "${{ toJSON(github) }}"
+        run: echo "$CTX"
+
 
       # - name: Metadata 2
       #   run: |
