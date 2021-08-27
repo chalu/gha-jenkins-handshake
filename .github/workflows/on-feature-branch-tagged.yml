@@ -17,7 +17,7 @@ jobs:
     name: 'Test Feature Branch'
 
     env:
-      REMOTE: "$(git branch -r --contains ${{ github.ref }})"
+      REMOTE: git branch -r --contains ${{ github.ref }}
       # BRANCH: "${REMOTE/origin\/}"
 
     steps:
