@@ -26,14 +26,20 @@ jobs:
       #     node-version: '12.18.3'
       #     cache: 'npm'
 
+      - name: Set Branch / Tag
+        run: |
+          echo "TAG=${GITHUB_REF#refs/*/}"
+          echo "COMMIT=$(git rev-parse tags/env.TAG~0)"
+          echo "BRANCH=$(git branch -a --contains ${env.COMMIT })"
+          echo "${env.TAG} - ${env.BRANCH} - ${env.COMMIT}"
+        
+
       - name: ENV
         run: |
           echo "Ref: ${GITHUB_REF}"
           echo "Event: ${GITHUB_EVENT_NAME}"
-          echo "SHA12: ${SHA12}"
-          echo "${{ toJSON(github.event) }}"
+          echo "SHA12: ${GITHUB_SHA:0:12}"
           echo "${GITHUB_ENV}"
-          ls  
 
   deploy: 
     needs: test
