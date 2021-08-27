@@ -31,14 +31,11 @@ jobs:
           export "TAG=${GITHUB_REF#refs/*/}"
           export "COMMIT=$(git rev-parse tags/$TAG~0)"
           export "BRANCH=$(git branch --contains $COMMIT)"
-        
-
-      - name: ENV
-        run: |
           echo "Ref: ${GITHUB_REF}"
           echo "Branch: $BRANCH"
           echo "Event: ${GITHUB_EVENT_NAME}"
           echo "SHA12: ${GITHUB_SHA:0:12}"
+          
 
   deploy: 
     needs: test
