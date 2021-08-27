@@ -23,7 +23,8 @@ jobs:
       - name: Metadata 
         run: |
          export REMOTE=$(git branch -r --contains ${{ github.ref }})
-         export "BRANCH=${REMOTE/origin\/}"
+         echo "Remote: $REMOTE"
+         export BRANCH=${REMOTE/origin\/}
          echo "Branch: $BRANCH"
          echo $BRANCH >> $GITHUB_ENV
 
