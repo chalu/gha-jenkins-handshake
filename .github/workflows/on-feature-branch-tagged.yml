@@ -29,9 +29,9 @@ jobs:
       - name: Set Branch / Tag
         run: |
           echo "TAG=${GITHUB_REF#refs/*/}"
-          echo "COMMIT=$(git rev-parse tags/$TAG~0)"
-          echo "BRANCH=$(git branch --contains ${env.COMMIT})"
-          echo "$TAG - $BRANCH - $COMMIT"
+          echo "COMMIT=$(git rev-parse tags/${{env.TAG}}~0)"
+          echo "BRANCH=$(git branch --contains ${{env.COMMIT}})"
+          echo "${{env.TAG}} - ${{env.BRANCH}} - ${{env.COMMIT}}"
         
 
       - name: ENV
