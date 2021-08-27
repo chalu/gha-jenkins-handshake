@@ -1,0 +1,46 @@
+name: Feature Branch
+
+# ------------------------------------------------------- #
+# Manually trigger this workflow when a pushed feature branch 
+# is tagged with this format: deploy-[\d]+ where d can
+# signify the deploy number which should be a simple int bunmped up each time
+# Eg: deploy-05
+# ------------------------------------------------------- #
+on:
+  create:
+    tags:
+      - deploy-*
+
+jobs:
+  test: 
+    runs-on: ubuntu-18.04
+    name: 'Test Feature Branch'
+
+    env:
+      SHA12: ${GITHUB_SHA:0:12}
+
+    steps:
+      - uses: actions/checkout@v2
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '12.18.3'
+      #     cache: 'npm'
+
+      - name: ENV
+        run: |
+          echo "Ref: ${GITHUB_REF}"
+          echo "Event: ${GITHUB_EVENT_NAME}"
+          echo "SHA12: $SHA12"
+          ls  
+
+  deploy: 
+    needs: test
+    runs-on: ubuntu-18.04
+    name: 'Deploy Feature Branch'
+
+    steps:
+      - name: Build Artifact
+        run: echo "Build Artifact"
+
+      - name: Deploy Artifact
+        run: echo "Deploy Artifact"
