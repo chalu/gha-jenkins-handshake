@@ -31,6 +31,7 @@ jobs:
           export "TAG=${GITHUB_REF#refs/*/}"
           export "COMMIT=$(git rev-parse tags/$TAG~0)"
           export "BRANCH=$(git branch --contains $COMMIT)"
+          export "BRANCH=${BRANCH:2}"
           echo "Tag: $TAG"
           echo "Commit: $COMMIT"
           echo "Branch: $BRANCH"
@@ -42,7 +43,7 @@ jobs:
         run: |
           echo "TAGG=${GITHUB_REF#refs/*/}" | tee -a $GITHUB_ENV
           echo "BRANCHH=$(git branch -a --contains ${{ env.TAGG }} | grep -v HEAD | cut -d '/' -f3)" | tee -a $GITHUB_ENV
-          echo "$${{env.TAGG}} - ${{env.BRANCHH}}"
+          echo "${{env.TAGG}} - ${{env.BRANCHH}}"
           
 
   deploy: 
