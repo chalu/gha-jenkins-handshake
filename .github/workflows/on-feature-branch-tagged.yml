@@ -16,21 +16,15 @@ jobs:
     runs-on: ubuntu-18.04
     name: 'Test Feature Branch'
 
-    env:
-      REMOTE: git branch -r --contains ${{ github.ref }}
-      # BRANCH: "${REMOTE/origin\/}"
-
     steps:
 
       - uses: actions/checkout@v2
 
       - name: Metadata 
         run: |
-          echo "$REMOTE"
-          echo "$BRANCH"
-        # run: |
-        #  echo "REMOTE=$(git branch -r --contains ${{ github.ref }})"
-        #  echo "BRANCH=${REMOTE/origin\/}" >> $GITHUB_ENV
+         export REMOTE=$(git branch -r --contains ${{ github.ref }})
+         export "BRANCH=${REMOTE/origin\/}"
+         echo "$BRANCH" >> $GITHUB_ENV
 
       - run: echo "$GITHUB_ENV"
 
