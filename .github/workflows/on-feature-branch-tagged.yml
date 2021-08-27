@@ -26,8 +26,9 @@ jobs:
           echo "Tag: $tag"
           export commit="$(git rev-parse tags/$tag~0)"
           echo "Commit: $commit"
-          echo "branch=$(git branch -r --contains $commit)"
-          echo "$branch"
+          export branch="$(git branch -r --contains $commit)"
+          echo "Branch: $branch"
+          echo "$branch" >> $GITHUB_ENV
         #  export REMOTE=$(git branch -r --contains ${{ github.ref }})
         #  export BRANCH=${REMOTE/origin\/}
         #  echo "Branch: $BRANCH"
