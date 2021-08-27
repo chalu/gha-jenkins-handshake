@@ -18,7 +18,7 @@ jobs:
 
     env:
       REMOTE: "$(git branch -r --contains ${{ github.ref }})"
-      BRANCH: "${REMOTE/origin\/}"
+      # BRANCH: "${REMOTE/origin\/}"
 
     steps:
 
