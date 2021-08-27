@@ -9,7 +9,7 @@ name: Feature Branch
 on:
   push:
     tags:
-      - deploy/G2APIS-*
+      - "deploy/G2APIS-*"
 
 jobs:
   test: 
