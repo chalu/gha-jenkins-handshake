@@ -23,8 +23,8 @@ jobs:
       - name: Metadata 
         run: |
           echo "tag=${GITHUB_REF#refs/*/}"
-          echo "Tag: $tag"
-          commit=$(git rev-parse tags/$tag~0)
+          echo "Tag: ${tag}"
+          commit=$(git rev-parse tags/${tag}~0)
           branch=$(git branch -r --contains $commit)
           echo "$branch"
         #  export REMOTE=$(git branch -r --contains ${{ github.ref }})
