@@ -16,23 +16,17 @@ jobs:
     runs-on: ubuntu-18.04
     name: 'Test Feature Branch'
 
-    env:
-      SHA12: ${GITHUB_SHA:0:12}
-
     steps:
 
-      - name: Metadata 1
+      - uses: actions/checkout@v2
+
+      - name: Metadata 
         run: |
-          export "TAG=${GITHUB_REF#refs/*/}"
-          export "COMMIT=$(git rev-parse tags/$TAG~0)"
-          export "BRANCH=$(git branch --contains $COMMIT)"
-          export "BRANCH=${BRANCH:2}"
-          echo "Tag: $TAG"
-          echo "Commit: $COMMIT"
-          echo "Branch: $BRANCH"
-          echo "Ref: ${GITHUB_REF}"
-          echo "Event: ${GITHUB_EVENT_NAME}"
-          echo "SHA12: ${GITHUB_SHA:0:12}"
+         raw=$(git branch -r --contains ${{ github.ref }})
+         branch=${raw/origin\/}
+         echo ::set-env name=BRANCH::$branch
+         
+      - run: echo ${{ env.BRANCH }}
 
       - name: GitHub CTX Dump
         env:
