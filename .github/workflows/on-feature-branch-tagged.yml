@@ -24,7 +24,8 @@ jobs:
         run: |
          export REMOTE=$(git branch -r --contains ${{ github.ref }})
          export "BRANCH=${REMOTE/origin\/}"
-         echo "$BRANCH" >> $GITHUB_ENV
+         echo "Branch: $BRANCH"
+         echo $BRANCH >> $GITHUB_ENV
 
       - run: echo "$GITHUB_ENV"
 
