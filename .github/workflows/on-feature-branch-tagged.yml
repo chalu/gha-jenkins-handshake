@@ -7,7 +7,7 @@ name: Feature Branch
 # Eg: deploy-05
 # ------------------------------------------------------- #
 on:
-  push:
+  create:
     tags:
       - "deploy-G2APIS-*"
 
@@ -21,7 +21,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Metadata 
-        run: git branch -r --contains ${{ github.ref }}
+        run: |
+          tag=${github.ref#refs/*/}
+          commit=git rev-parse tags/$tag~0
+          branch=git branch -r --contains $commit
+          echo "$branch"
         #  export REMOTE=$(git branch -r --contains ${{ github.ref }})
         #  export BRANCH=${REMOTE/origin\/}
         #  echo "Branch: $BRANCH"
