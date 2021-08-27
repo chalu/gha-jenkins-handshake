@@ -26,7 +26,10 @@ jobs:
          branch=${raw/origin\/}
          echo "BRANCH=$branch" >> $GITHUB_ENV
 
-      - run: echo ${{ env.BRANCH }}
+      - run: |
+          echo "${env.BRANCH}"
+          echo "$env.BRANCH"
+          echo "$GITHUB_ENV"
 
       - name: GitHub CTX Dump
         env:
