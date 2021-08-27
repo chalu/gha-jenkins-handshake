@@ -26,13 +26,10 @@ jobs:
 
       - name: Metadata 
         run: |
-         echo "RAW=$(git branch -r --contains ${{ github.ref }})"
-         echo "BRANCH=${RAW/origin\/}" >> $GITHUB_ENV
-         echo "action_state=yellow" >> $GITHUB_ENV
+         echo "REMOTE=$(git branch -r --contains ${{ github.ref }})"
+         echo "BRANCH=${REMOTE/origin\/}" >> $GITHUB_ENV
 
-      - run: |
-          echo "${{ env.action_state }}"
-          echo "$GITHUB_ENV"
+      - run: echo "$GITHUB_ENV"
 
       - name: GitHub CTX Dump
         env:
