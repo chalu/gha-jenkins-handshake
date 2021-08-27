@@ -36,11 +36,6 @@ jobs:
 
       - run: echo "$GITHUB_ENV"
 
-      - name: GitHub CTX Dump
-        env:
-          CTX: "${{ toJSON(github) }}"
-        run: echo "$CTX"
-
 
       # - name: Metadata 2
       #   run: |
