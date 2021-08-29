@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - run: echo $(git branch --contains tags/deploy-G2APIS-909-10)
+      - run: echo "$(git branch --contains tags/deploy-G2APIS-909-10)"
 
       # - name: Metadata 
       #   run: |
