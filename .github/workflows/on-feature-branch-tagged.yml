@@ -36,13 +36,17 @@ jobs:
       - run: echo "BRANCH=${TAGGED/origin\/}" >> $GITHUB_ENV
 
       - run: echo "$GITHUB_ENV"
-      
-      - name: Checkout Tagged Branch
-        uses: actions/checkout@v2
-        with:
-          ref: $COMMIT
 
+      - run: git checkout $BRANCH
       - run: ls -a
+      - run: git branch --show-current
+      
+      # - name: Checkout Tagged Branch
+      #   uses: actions/checkout@v2
+      #   with:
+      #     ref: "refs/heads/$BRANCH"
+
+      
 
       # - run: |
       #     export REMOTE=$(git branch -r --contains ${{ github.ref }})
