@@ -19,6 +19,6 @@ jobs:
 
     steps:
       - name: 'Run Unit Tests'
-        run: echo "TEST_ENV_NUMBER=${{ matrix.stream:7 }} docker-compose run api ./test_stream.sh n$TSTREAM --reporter spec"
+        run: echo "TEST_ENV_NUMBER=${{ matrix.stream }}:7 docker-compose run api ./test_stream.sh n$TSTREAM --reporter spec"
         env:
           TSTREAM: "$matrix.stream"
