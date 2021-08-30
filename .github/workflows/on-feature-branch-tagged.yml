@@ -32,9 +32,19 @@ jobs:
       - run: echo "$(git rev-parse tags/$TAG~0)"
       - run: echo "COMMIT=$(git rev-parse tags/$TAG~0)" >> $GITHUB_ENV
       - run: echo "$(git branch -r --contains $COMMIT)"
-      - run: echo "TAGGED_BRANCH=$(git branch -r --contains $COMMIT)" >> $GITHUB_ENV
+      - run: echo "TAGGED=$(git branch -r --contains $COMMIT)" >> $GITHUB_ENV
+      - run: echo "BRANCH=${TAGGED/origin\/}" >> $GITHUB_ENV
 
       - run: echo "$GITHUB_ENV"
+      
+      - name: Checkout Tagged Branch
+        uses: actions/checkout@v2
+        with:
+          ref: $BRANCH
+
+      - run: |
+          git branch --show-current
+          ls -a
 
       # - run: |
       #     export REMOTE=$(git branch -r --contains ${{ github.ref }})
