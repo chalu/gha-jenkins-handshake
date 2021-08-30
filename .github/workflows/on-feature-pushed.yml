@@ -12,14 +12,17 @@ jobs:
 
     strategy:
       matrix:
-        stream: [Stream-1, Stream-2, Stream-3]
+        stream: [Stream-1, Stream-2, Stream-3, Stream-4]
 
     # echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./test_stream.sh n$TSTREAM --reporter spec"
     steps:
       - name: 'Run Unit Tests'
         run: |
-          export "TSTREAM=${${{ matrix.stream }}:7}"
+          export "STREAM=${{ matrix.stream }}"
+          export "TSTREAM=${STREAM:7}"
           echo ${TSTREAM} 
           echo ${GITHUB_SHA:0:12}
-          echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./test_stream.sh n$TSTREAM --reporter spec"
+          if [ "$TSTREAM" -eq 4 ]; then export TEST="rule-processing-app/run_tests"; else export TEST="test_stream"; fi
+          echo ${TEST}
+          echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./$TEST.sh n$TSTREAM --reporter spec"
           
