@@ -11,7 +11,7 @@ jobs:
     name: 'Test Feature Branch'
 
     env:
-      SHA12: $GITHUB_SHA
+      SHA12: GITHUB_SHA
 
     strategy:
       matrix:
@@ -19,6 +19,6 @@ jobs:
 
     steps:
       - name: 'Run Unit Tests'
-        run: echo "TEST_ENV_NUMBER=${{ matrix.stream }}:7 docker-compose run api ./test_stream.sh n$TSTREAM --reporter spec"
+        run: echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./test_stream.sh n$TSTREAM --reporter spec"
         env:
-          TSTREAM: "$matrix.stream"
+          TSTREAM: echo ${matric.stream:7}
