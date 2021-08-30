@@ -9,8 +9,8 @@ jobs:
     name: 'Test Feature Branch'
 
     env:
-      SHA12: GITHUB_SHA:0:12
-      BRANCH: github.base_ref
+      SHA12: "${GITHUB_SHA}:0:12"
+      BRANCH: "${{ github.base_ref }}"
 
     strategy:
       matrix:
