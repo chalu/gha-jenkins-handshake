@@ -40,11 +40,9 @@ jobs:
       - name: Checkout Tagged Branch
         uses: actions/checkout@v2
         with:
-          ref: $BRANCH
+          ref: $COMMIT
 
-      - run: |
-          git branch --show-current
-          ls -a
+      - run: ls -a
 
       # - run: |
       #     export REMOTE=$(git branch -r --contains ${{ github.ref }})
