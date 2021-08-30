@@ -20,7 +20,11 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - run: echo "$(git branch -r --contains tags/deploy-G2APIS-909-10)"
+      - run: |
+          git branch --show-current
+          ls -a
+
+      - run: echo "$(git branch -r --contains aa51f7908334a70292bafda5e802cd7530d35c8e)"
 
       # - run: |
       #     export REMOTE=$(git branch -r --contains ${{ github.ref }})
