@@ -29,7 +29,8 @@ jobs:
       - run: echo "TAG=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - run: echo "$(git rev-parse tags/$TAG~0)"
       - run: echo "COMMIT=$(git rev-parse tags/$TAG~0)" >> $GITHUB_ENV
-      # - run: echo "$(git branch -r --contains ${{ github.ref }})"
+      - run: echo "$(git branch -r --contains $COMMIT)"
+      - run: echo "TAGGED_BRANCH=$(git branch -r --contains $COMMIT)" >> $GITHUB_ENV
 
       - run: echo "$GITHUB_ENV"
 
