@@ -1,0 +1,23 @@
+on:
+  push:
+    branches:
+      - "ft-*"
+
+jobs:
+  test: 
+    runs-on: ubuntu-18.04
+    name: 'Test Feature Branch'
+
+    env:
+      SHA12: GITHUB_SHA:0:12
+      BRANCH: github.base_ref
+
+    strategy:
+      matrix:
+        stream: [Stream-1, Stream-2, Stream-3]
+
+    steps:
+      - name: 'Run Unit Tests'
+        run: echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./test_stream.sh n$TSTREAM --reporter spec"
+        env:
+          TSTREAM: ${matrix.stream:7}
