@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-18.04
     name: 'Test Feature Branch'
 
-    env:
-      SHA12: "${{ GITHUB_SHA:0:12 }}"
-      BRANCH: "${{ github.base_ref }}"
-
     strategy:
       matrix:
         stream: [Stream-1, Stream-2, Stream-3]
