@@ -18,7 +18,9 @@ jobs:
     steps:
       - name: 'Run Unit Tests'
         run: |
-          export "TSTREAM=${{ matrix.stream }}"
+          export "STREAM=${{ matrix.stream }}"
+          export "TSTREAM=${STREAM:7}"
           echo ${TSTREAM:7} 
           echo ${GITHUB_SHA:0:12}
+          echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./test_stream.sh n$TSTREAM --reporter spec"
           
