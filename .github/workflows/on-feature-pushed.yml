@@ -10,19 +10,27 @@ jobs:
     runs-on: ubuntu-18.04
     name: 'Test Feature Branch'
 
-    strategy:
-      matrix:
-        stream: [Stream-1, Stream-2, Stream-3, Stream-4]
+    # strategy:
+    #   matrix:
+    #     stream: [Stream-1, Stream-2, Stream-3, Stream-4]
 
-    # echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./test_stream.sh n$TSTREAM --reporter spec"
     steps:
-      - name: 'Run Unit Tests'
-        run: |
-          export "STREAM=${{ matrix.stream }}"
-          export "TSTREAM=${STREAM:7}"
-          echo ${TSTREAM} 
-          echo ${GITHUB_SHA:0:12}
-          if [ "$TSTREAM" -eq 4 ]; then export TEST="rule-processing-app/run_tests"; else export TEST="test_stream"; fi
-          echo ${TEST}
-          echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./$TEST.sh n$TSTREAM --reporter spec"
+      # - name: 'Run Unit Tests'
+      #   run: |
+      #     export "STREAM=${{ matrix.stream }}"
+      #     export "TSTREAM=${STREAM:7}"
+      #     echo ${TSTREAM} 
+      #     echo ${GITHUB_SHA:0:12}
+      #     if [ "$TSTREAM" -eq 4 ]; then export TEST="rule-processing-app/run_tests"; else export TEST="test_stream"; fi
+      #     echo ${TEST}
+      #     echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./$TEST.sh n$TSTREAM --reporter spec"
+
+      - name: 'Create Artifact'
+        run:  tar -cz "{{ $GITHUB_SHA:0:12 }}".tar.gz --exclude=.* .
+
+      - name: 'Save Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: sensibill-api
+          path: "{{ $GITHUB_SHA:0:12 }}.tar.gz"
           
