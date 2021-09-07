@@ -28,14 +28,15 @@ jobs:
       #     echo ${TEST}
       #     echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./$TEST.sh n$TSTREAM --reporter spec"
 
-      - run: echo "SHA8=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
-      - name: 'Create Artifact'
-        run: echo $SHA8
-        # run:  tar -cz "{{ $GITHUB_SHA:0:12 }}".tar.gz --exclude=.* .
+      - name: 'Set Env'
+        run: echo "SHA8=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
 
-      # - name: 'Save Artifact'
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: sensibill-api
-      #     path: "{{ $GITHUB_SHA:0:12 }}.tar.gz"
+      - name: 'Create Artifact'
+        run:  tar -cz $SHA8.tar.gz --exclude=.* ./
+
+      - name: 'Save Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: sensibill-api
+          path: $SHA8.tar.gz
           
