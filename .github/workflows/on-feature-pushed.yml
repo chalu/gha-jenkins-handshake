@@ -33,16 +33,20 @@ jobs:
       - name: 'Set Env'
         run: |
           echo "SHA8=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
-          mkdir -p ${{ github.workspace }}/artifacts
+          mkdir ${{ github.workspace }}/artifacts
 
       - name: 'Create Artifact'
         run:  |
           tar --exclude=.* -cvzf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz ./
           ls ${{ github.workspace }}/artifacts/
+          cd ${{ github.workspace }}/artifacts/
+          tar -xvf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz
 
-      - name: 'Save Artifact'
-        uses: actions/upload-artifact@v2
-        with:
-          name: sensibill-api
-          path: ${{ github.workspace }}/artifacts/*
+      # - name: 'Create Artifact'
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: sensibill-api
+      #     path: |
+      #       ./
+      #       !.*
           
