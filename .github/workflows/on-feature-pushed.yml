@@ -34,7 +34,7 @@ jobs:
 
       - name: 'Create Artifact'
         run:  |
-          echo $'.git*\n.env\n.npmrc\nartifacts/' > skip.txt
+          echo $'.git*\n.env\n.npmrc\nartifacts\nskip.txt' > skip.txt
           cat skip.txt
           tar -cvzf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz -X skip.txt .
           ls ${{ github.workspace }}/artifacts
@@ -42,8 +42,8 @@ jobs:
       - name: 'Check Artifact'
         run: |
           cd ${{ github.workspace }}/artifacts
-          tar -xvf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz
-          ls ${{ github.workspace }}/artifacts
+          tar -xvf api-$SHA8.tar.gz
+          ls
 
       # - name: 'Create Artifact'
       #   uses: actions/upload-artifact@v2
