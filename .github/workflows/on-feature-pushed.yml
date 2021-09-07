@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-18.04
     name: 'Test Feature Branch'
 
-    env:
-      SHA8: ${GITHUB_SHA::8}
-
     # strategy:
     #   matrix:
     #     stream: [Stream-1, Stream-2, Stream-3, Stream-4]
@@ -37,7 +34,7 @@ jobs:
 
       - name: 'Create Artifact'
         run:  |
-          tar --exclude=.* -cvzf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz ./
+          tar -cvzf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz .
           ls ${{ github.workspace }}/artifacts
 
       - name: 'Check Artifact'
