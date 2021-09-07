@@ -34,7 +34,7 @@ jobs:
 
       - name: 'Create Artifact'
         run:  |
-          tar -cvzf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz .
+          tar -cvzf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz --exclude=.* .
           ls ${{ github.workspace }}/artifacts
 
       - name: 'Check Artifact'
