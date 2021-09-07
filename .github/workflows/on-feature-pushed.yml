@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       # - name: 'Run Unit Tests'
       #   run: |
       #     export "STREAM=${{ matrix.stream }}"
@@ -31,16 +31,18 @@ jobs:
       #     echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./$TEST.sh n$TSTREAM --reporter spec"
 
       - name: 'Set Env'
-        run: echo "SHA8=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
+        run: |
+          echo "SHA8=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
+          mkdir -p ${{ github.workspace }}/artifacts
 
       - name: 'Create Artifact'
         run:  |
-          tar -czf "api-$SHA8.tar.gz" --exclude=.* .
-          ls
+          tar -czf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz --exclude=.* .
+          ls ${{ github.workspace }}/artifacts
 
       - name: 'Save Artifact'
         uses: actions/upload-artifact@v2
         with:
           name: sensibill-api
-          path: ./api-$SHA8.tar.gz
+          path: ${{ github.workspace }}/artifacts/*
           
