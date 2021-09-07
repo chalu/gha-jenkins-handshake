@@ -35,7 +35,6 @@ jobs:
       - name: 'Create Artifact'
         run:  |
           echo $'.git*\n.env\n.npmrc\nartifacts\nskip.txt' > skip.txt
-          cat skip.txt
           tar -cvzf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz -X skip.txt .
           ls ${{ github.workspace }}/artifacts
 
@@ -45,11 +44,9 @@ jobs:
           tar -xvf api-$SHA8.tar.gz
           ls
 
-      # - name: 'Create Artifact'
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: sensibill-api
-      #     path: |
-      #       ./
-      #       !.*
+      - name: 'GitHub: Upload Artifact'
+        uses: actions/upload-artifact@v2
+        with:
+          name: sensibill-api
+          path: ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz
           
