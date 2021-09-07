@@ -48,5 +48,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: sensibill-api
-          path: ${{ github.workspace }}/artifacts/*
+          path: ${{ github.workspace }}/artifacts/api-*.tar.gz
           
