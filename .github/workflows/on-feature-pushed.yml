@@ -37,7 +37,7 @@ jobs:
 
       - name: 'Create Artifact'
         run:  |
-          tar --exclude=.* -cvzf "${{ github.workspace }}/artifacts/api-$SHA8.tar.gz" ./
+          tar --exclude=.* -cvzf "${{ github.workspace }}"/artifacts/api-{env.SHA8}.tar.gz ./
 
       - name: 'Save Artifact'
         uses: actions/upload-artifact@v2
