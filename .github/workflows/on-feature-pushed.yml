@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-18.04
     name: 'Test Feature Branch'
 
+    env:
+      SHA12: GITHUB_SHA:0:12
+
     # strategy:
     #   matrix:
     #     stream: [Stream-1, Stream-2, Stream-3, Stream-4]
@@ -26,11 +29,12 @@ jobs:
       #     echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./$TEST.sh n$TSTREAM --reporter spec"
 
       - name: 'Create Artifact'
-        run:  tar -cz "{{ $GITHUB_SHA:0:12 }}".tar.gz --exclude=.* .
+        run: echo $SHA12
+        # run:  tar -cz "{{ $GITHUB_SHA:0:12 }}".tar.gz --exclude=.* .
 
-      - name: 'Save Artifact'
-        uses: actions/upload-artifact@v2
-        with:
-          name: sensibill-api
-          path: "{{ $GITHUB_SHA:0:12 }}.tar.gz"
+      # - name: 'Save Artifact'
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: sensibill-api
+      #     path: "{{ $GITHUB_SHA:0:12 }}.tar.gz"
           
