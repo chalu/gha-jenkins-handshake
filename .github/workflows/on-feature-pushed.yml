@@ -34,7 +34,8 @@ jobs:
 
       - name: 'Create Artifact'
         run:  |
-          tar -cvzf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz --exclude=.* .
+          echo ".git* \n .env \n .npmrc" > xx.txt
+          tar -cvzf ${{ github.workspace }}/artifacts/api-$SHA8.tar.gz -X xx.txt --exclude= .
           ls ${{ github.workspace }}/artifacts
 
       - name: 'Check Artifact'
