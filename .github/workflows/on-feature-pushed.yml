@@ -18,6 +18,8 @@ jobs:
     #     stream: [Stream-1, Stream-2, Stream-3, Stream-4]
 
     steps:
+      - uses: actions/checkout@v2
+      
       # - name: 'Run Unit Tests'
       #   run: |
       #     export "STREAM=${{ matrix.stream }}"
