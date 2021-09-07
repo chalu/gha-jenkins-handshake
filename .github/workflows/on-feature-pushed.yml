@@ -32,11 +32,11 @@ jobs:
         run: echo "SHA8=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_ENV
 
       - name: 'Create Artifact'
-        run:  tar -cz $SHA8.tar.gz --exclude=.* ./
+        run:  tar -cz "api-$SHA8".tar.gz .
 
-      - name: 'Save Artifact'
-        uses: actions/upload-artifact@v2
-        with:
-          name: sensibill-api
-          path: $SHA8.tar.gz
+      # - name: 'Save Artifact'
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: sensibill-api
+      #     path: $SHA8.tar.gz
           
