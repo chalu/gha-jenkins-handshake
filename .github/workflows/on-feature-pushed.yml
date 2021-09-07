@@ -37,11 +37,12 @@ jobs:
 
       - name: 'Create Artifact'
         run:  |
-          tar --exclude=.* -cvzf "${{ github.workspace }}"/artifacts/api-{env.SHA8}.tar.gz ./
+          tar --exclude=.* -cvzf ${{ github.workspace }}/artifacts/api-{env.SHA8}.tar.gz ./
+          ls ${{ github.workspace }}/artifacts/
 
       - name: 'Save Artifact'
         uses: actions/upload-artifact@v2
         with:
           name: sensibill-api
-          path: "${{ github.workspace }}/artifacts/api-$SHA8.tar.gz"
+          path: ${{ github.workspace }}/artifacts/*
           
