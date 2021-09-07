@@ -11,7 +11,7 @@ jobs:
     name: 'Test Feature Branch'
 
     env:
-      SHA12: ${GITHUB_SHA:8}
+      SHA8: ${GITHUB_SHA::8}
 
     # strategy:
     #   matrix:
@@ -29,7 +29,7 @@ jobs:
       #     echo "TEST_ENV_NUMBER=$TSTREAM docker-compose run api ./$TEST.sh n$TSTREAM --reporter spec"
 
       - name: 'Create Artifact'
-        run: echo $SHA12
+        run: echo $SHA8
         # run:  tar -cz "{{ $GITHUB_SHA:0:12 }}".tar.gz --exclude=.* .
 
       # - name: 'Save Artifact'
